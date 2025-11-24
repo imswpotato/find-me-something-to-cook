@@ -1,0 +1,16 @@
+Name: Find me something to cook
+Author: Gia Cat Nguyen Tran
+Languages: HTML, CSS, JavaScript
+
+Planning:
+What data will you fetch from the API?
+- I am using TheMealDB to fetch recipe data. The data includes all the food and beverage recipe around the world.
+Which API endpoints will you use?
+- Random recipe: www.themealdb.com/api/json/v1/1/random.php
+- Filter by main ingredient: www.themealdb.com/api/json/v1/1/filter.php
+How will the user interact with your page?
+- When the user load my page, they will see a search bar with search button, clear button. The user will type in any ingredient and press search to look for any recipe with that ingredient. The screen will appear a list of recipes for the user to select. The clear button is to clear the typing.
+- Moreover, when the page loads, the user can also see some random recipes already on the screen.
+- The user can select the recipe and save it to their own storage on the page, which is called "Notebook." In the "Notebook", the user can select and delete their recipes.
+Sketch or wireframe your design.
+- Figma link for wireframe: ...

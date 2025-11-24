@@ -1,0 +1,26 @@
+{
+  "name": "find-me-something-to-cook",
+  "version": "1.0.0",
+  "description": "A website that helps you to look for something to cook.",
+  "main": "index.js",
+  "scripts": {
+  "start": "echo \"Open index.html in your browser\"",
+  "build": "esbuild src/app.js --bundle --outfile=dist/bundle.js",
+  "watch": "esbuild src/app.js --bundle --outfile=dist/bundle.js --watch"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imswpotato/find-me-something-to-cook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/imswpotato/find-me-something-to-cook/issues"
+  },
+  "homepage": "https://github.com/imswpotato/find-me-something-to-cook#readme",
+  "devDependencies": {
+    "esbuild": "^0.27.0"
+  }
+}

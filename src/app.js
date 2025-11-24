@@ -1,64 +1,59 @@
-// src/app.js
-import { getRandomRecipes, getRecipesByIngredient } from './api.js';
-import { displayRecipes } from './dom.js';
+// src/dom.js
 
-const searchBtn = document.getElementById('searchBtn');
-const clearBtn = document.getElementById('clearBtn');
-const refreshBtn = document.getElementById('refreshBtn');
-const results = document.getElementById('results');
-const notebookContainer = document.getElementById('notebook');
+// Display recipes (search results or random suggestions) in the DOM
+export function displayRecipes(recipes, container, onSave) {
+    container.innerHTML = ''; // Clear previous content
 
-// Fake notebook storage
-let notebook = JSON.parse(localStorage.getItem('notebook')) || [];
-
-// Save recipe to notebook
-function saveToNotebook(recipe) {
-    if (!notebook.find(fav => fav.idMeal === recipe.idMeal)) {
-        notebook.push(recipe);
-        localStorage.setItem('notebook', JSON.stringify(notebook));
-        alert(`${recipe.strMeal} saved to notebook!`);
-        displayRecipes(notebook, notebookContainer, deleteFromNotebook);
-    } else {
-        alert(`${recipe.strMeal} is already in your notebook.`);
+    if (!recipes || recipes.length === 0) {
+        container.innerHTML = '<p>No recipes found.</p>';
+        return;
     }
+
+    recipes.forEach(recipe => {
+        const recipeCard = document.createElement('div');
+        recipeCard.classList.add('recipe-card');
+
+        recipeCard.innerHTML = `
+            <h3>${recipe.strMeal}</h3>
+            <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" class="recipe-image"/>
+            <a href="https://www.themealdb.com/meal/${recipe.idMeal}" target="_blank" class="recipe-link">View Recipe</a>
+            <button class="save-recipe-button">Save to Notebook</button>
+        `;
+
+        // Save button functionality
+        recipeCard.querySelector('.save-recipe-button').addEventListener('click', () => {
+            onSave(recipe);
+        });
+
+        container.appendChild(recipeCard);
+    });
 }
 
-// Delete recipe from notebook
-function deleteFromNotebook(idMeal) {
-    const recipeToDelete = notebook.find(fav => fav.idMeal === idMeal);
-    notebook = notebook.filter(fav => fav.idMeal !== recipe.idMeal);
-    localStorage.setItem('notebook', JSON.stringify(notebook));
-    if (recipeToDelete) {
-    alert(`${recipeToDelete.strMeal} removed from notebook.`);
-    displayRecipes(notebook, notebookContainer, deleteFromNotebook);
-}
+// Display Notebook (favorites)
+export function displayNotebook(notebook, container, onDelete) {
+    container.innerHTML = ''; // Clear previous content
 
-// Show multiple random recipes on page load
-window.addEventListener('load', async () => {
-    const randomRecipes = await getRandomRecipes(5);
-    displayRecipes(randomRecipes, results, saveToNotebook);
-    displayRecipes(notebook, notebookContainer, deleteFromNotebook);
-});
-
-// Search recipes by ingredient
-searchBtn.addEventListener('click', async () => {
-    const ingredient = document.getElementById('ingredientInput').value.trim();
-    if (ingredient) {
-        const recipes = await getRecipesByIngredient(ingredient);
-        displayRecipes(recipes, results, saveToNotebook);
-    } else {
-        alert('Please enter an ingredient to search.');
+    if (!notebook || notebook.length === 0) {
+        container.innerHTML = '<p>Your Notebook is empty.</p>';
+        return;
     }
-});
 
-// Clear search results
-clearBtn.addEventListener('click', () => {
-    results.innerHTML = '';
-});
+    notebook.forEach(recipe => {
+        const recipeCard = document.createElement('div');
+        recipeCard.classList.add('recipe-card');
 
-// Refresh random recipes
-refreshBtn.addEventListener('click', async () => {
-    const randomRecipes = await getRandomRecipes(5);
-    displayRecipes(randomRecipes, results, saveToNotebook);
-});
+        recipeCard.innerHTML = `
+            <h3>${recipe.strMeal}</h3>
+            <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" class="recipe-image"/>
+            <a href="https://www.themealdb.com/meal/${recipe.idMeal}" target="_blank" class="recipe-link">View Recipe</a>
+            <button class="delete-recipe-button">Delete from Notebook</button>
+        `;
+
+        // Delete button functionality
+        recipeCard.querySelector('.delete-recipe-button').addEventListener('click', () => {
+            onDelete(recipe.idMeal);
+        });
+
+        container.appendChild(recipeCard);
+    });
 }

@@ -1,15 +1,16 @@
-/* General style */
+/* General styling */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body Styling */
+/* Body styling */
 body {
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     background-image: url('paper-texture.jpg');
-    background-size: cover;;
+    background-size: cover;
+    ;
     color: #333;
     line-height: 1.6;
     padding: 20px;
@@ -24,7 +25,7 @@ p {
 }
 
 .search-section input::placeholder {
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 /* Header */
@@ -45,7 +46,7 @@ header p {
 
 /* Search section */
 #ingredientsInput button {
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     width: 170px;
 }
 
@@ -70,7 +71,7 @@ header p {
 }
 
 .search-buttons button {
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     padding: 10px 15px;
     font-size: 0.9rem;
     border: none;
@@ -106,7 +107,7 @@ header p {
 }
 
 #results button {
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     width: 170px;
 }
 
@@ -169,7 +170,7 @@ header p {
     background: #b8794f;
 }
 
-/* Notebook Section */
+/* Notebook section */
 #favorites,
 #notebook {
     display: flex;
@@ -178,7 +179,7 @@ header p {
 }
 
 #notebook button {
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     width: 170px;
 
 }
@@ -250,7 +251,7 @@ header p {
     }
 }
 
-/* Responsive screen */
+/* Responsive screens */
 /* For tablets and smaller screens */
 @media (max-width: 1024px) {
     .search-section {

@@ -36,19 +36,31 @@ function deleteFromNotebook(idMeal) {
 
 // Show multiple random recipes on page load
 window.addEventListener('load', async () => {
-    const randomRecipes = await getRandomRecipes(5);
+    const randomRecipes = await getRandomRecipes(3);
     displayRecipes(randomRecipes, results, saveToNotebook);
     displayNotebook(notebook, notebookContainer, deleteFromNotebook);
 });
 
 // Search recipes by ingredient
 searchBtn.addEventListener('click', async () => {
-    const ingredient = document.getElementById('ingredientInput').value.trim();
-    if (ingredient) {
-        const recipes = await getRecipesByIngredient(ingredient);
-        displayRecipes(recipes, results, saveToNotebook);
-    } else {
+    const inputEl = document.getElementById('ingredientInput');
+    if (!inputEl) {
+        alert('Ingredient input not found.');
+        return;
+    }
+
+    const ingredient = inputEl.value.trim();
+    if (!ingredient) {
         alert('Please enter an ingredient to search.');
+        return;
+    }
+
+    const recipes = await getRecipesByIngredient(ingredient);
+    if (recipes && recipes.length > 0) {
+        const limitedRecipes = recipes.slice(0, 3);
+        displayRecipes(limitedRecipes, results, saveToNotebook);
+    } else {
+        results.innerHTML = '<p>No recipes found for that ingredient.</p>';
     }
 });
 
@@ -59,6 +71,6 @@ clearBtn.addEventListener('click', () => {
 
 // Refresh random recipes
 refreshBtn.addEventListener('click', async () => {
-    const randomRecipes = await getRandomRecipes(5);
+    const randomRecipes = await getRandomRecipes(3);
     displayRecipes(randomRecipes, results, saveToNotebook);
 });

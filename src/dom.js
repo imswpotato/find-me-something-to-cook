@@ -46,7 +46,7 @@ export function displayNotebook(notebook, container, onDelete) {
             <h3>${recipe.strMeal}</h3>
             <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" class="recipe-image"/>
             <a href="https://www.themealdb.com/meal/${recipe.idMeal}" target="_blank" class="recipe-link">View Recipe</a>
-            <button class="delete-recipe-button">Delete from Notebook</button>
+            <button class="delete-recipe-button">Delete</button>
         `;
 
         // Delete button functionality

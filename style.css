@@ -14,7 +14,8 @@ body {
     padding: 20px;
 }
 
-h2 {
+h2,
+h3 {
     text-align: center;
     margin: 15px 0;
     color: #000000;
@@ -104,6 +105,8 @@ header p {
     text-align: center;
     box-shadow: 0px 10px #00000008;
     width: 350px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
 }
 
 .recipe-card h3 {
@@ -182,6 +185,12 @@ header p {
     100% {
         transform: rotate(360deg);
     }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsive screen */

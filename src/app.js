@@ -72,13 +72,30 @@ searchBtn.addEventListener('click', async () => {
             const limitedRecipes = recipes.slice(0, 3);
 
             // Show spinner and loading message immediately
-            results.innerHTML = '<div class="spinner"></div><h3>Finding something yummy... please wait</h3>';
-
+            results.innerHTML = `
+            <div class="spinner-container">
+            <div class="spinner"></div>
+            <h3>Finding something yummy... please wait</h3>
+            </div>
+            `;
+            console.log("Recipes returned:", recipes);
+            console.log("Limited recipes:", limitedRecipes);
             // Wait 2 seconds before showing results
             delay(2000).then(() => {
-                displayRecipes(limitedRecipes, results, saveToNotebook);
-            });
+                try {
+                    displayRecipes(limitedRecipes, results, saveToNotebook);
 
+                    // Fade in effect
+                    const cards = document.querySelectorAll('.recipe-card');
+                    console.log("Cards found:", cards.length);
+                    cards.forEach((card, index) => {
+                        card.style.animationDelay = `${index * 0.2}s`;
+                    });
+                } catch (renderError) {
+                    console.error("Error rendering recipes:", renderError);
+                    results.innerHTML = '<p>Oops! The kitchen is burning. Try again later.</p>';
+                }
+            });
         } else {
             results.innerHTML = '<p>Oops! Not sure how to cook that...</p>';
         }

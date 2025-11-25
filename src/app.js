@@ -47,23 +47,13 @@ window.addEventListener('load', async () => {
     }
 });
 
-// Search recipes by ingredient
-function fetchRecipesByIngredient() {
-    getRecipesByIngredient(ingredient)
-        .then(recipes => {
-            if (recipes && recipes.length > 0) {
-                cancelIdleCallback(recipes.slice(0, 3));
-            } else {
-                results.innerHTML = '<p>No recipes found for the given ingredient.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching recipes:', error);
-            results.innerHTML = '<p>Error fetching recipes. Please try again later.</p>';
-        });
+// Delay function
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-searchBtn.addEventListener('click', () => {
+// Search recipes by ingredient
+searchBtn.addEventListener('click', async () => {
     const inputEl = document.getElementById('ingredientInput');
     if (!inputEl) {
         alert('Ingredient input not found.');
@@ -76,9 +66,26 @@ searchBtn.addEventListener('click', () => {
         return;
     }
 
-    fetchRecipesByIngredient(ingredient, (limitedRecipes) => {
-        displayRecipes(limitedRecipes, results, saveToNotebook);
-    });
+    try {
+        const recipes = await getRecipesByIngredient(ingredient);
+        if (recipes && recipes.length > 0) {
+            const limitedRecipes = recipes.slice(0, 3);
+
+            // Show loading message immediately
+            results.innerHTML = '<p>🔄 Searching recipes... please wait</p>';
+
+            // Wait 2 seconds before showing results
+            delay(2000).then(() => {
+                displayRecipes(limitedRecipes, results, saveToNotebook);
+            });
+
+        } else {
+            results.innerHTML = '<p>No recipes found for that ingredient.</p>';
+        }
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+        results.innerHTML = '<p>⚠️ Something went wrong. Try again later.</p>';
+    }
 });
 
 // Clear search results

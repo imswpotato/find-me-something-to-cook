@@ -12,45 +12,6 @@ const refreshBtn = document.getElementById('refreshBtn');
 const results = document.getElementById('results');
 const notebookContainer = document.getElementById('notebook');
 
-// Notebook storage in localStorage
-let notebook = JSON.parse(localStorage.getItem('notebook')) || [];
-
-// Save recipe to notebook
-function saveToNotebook(recipe, callback) {
-    const alreadySaved = notebook.find(fav => fav.idMeal === recipe.idMeal);
-
-    if (!alreadySaved) {
-        notebook.push(recipe);
-        localStorage.setItem('notebook', JSON.stringify(notebook));
-        displayNotebook(notebook, notebookContainer, deleteFromNotebook);
-
-        console.log('Notebook after saving:', notebook);
-
-        // Run callback if provided
-        if (typeof callback === 'function') {
-            callback(null, recipe); // success: no error, return recipe
-        }
-    } else {
-        // Run callback with error
-        if (typeof callback === 'function') {
-            callback(new Error(`${recipe.strMeal} is already in your notebook. Have you cooked it yet?`), null);
-        }
-    }
-}
-
-
-// Delete recipe from notebook
-function deleteFromNotebook(idMeal) {
-    const recipeToDelete = notebook.find(fav => fav.idMeal === idMeal);
-    notebook = notebook.filter(fav => fav.idMeal !== idMeal);
-    localStorage.setItem('notebook', JSON.stringify(notebook));
-    if (recipeToDelete) {
-        alert(`${recipeToDelete.strMeal} removed from notebook.`);
-    }
-    console.log('Notebook after deletion:', notebook);
-    displayNotebook(notebook, notebookContainer, deleteFromNotebook);
-}
-
 // Show multiple random recipes on page load
 window.addEventListener('load', async () => {
     try {
@@ -139,3 +100,41 @@ refreshBtn.addEventListener('click', () => {
             console.error("Error refreshing recipes:", error);
         });
 });
+
+// Notebook storage in localStorage
+let notebook = JSON.parse(localStorage.getItem('notebook')) || [];
+
+// Save recipe to notebook
+function saveToNotebook(recipe, callback) {
+    const alreadySaved = notebook.find(fav => fav.idMeal === recipe.idMeal);
+
+    if (!alreadySaved) {
+        notebook.push(recipe);
+        localStorage.setItem('notebook', JSON.stringify(notebook));
+        displayNotebook(notebook, notebookContainer, deleteFromNotebook);
+
+        console.log('Notebook after saving:', notebook);
+
+        // Run callback if provided
+        if (typeof callback === 'function') {
+            callback(null, recipe); // success: no error, return recipe
+        }
+    } else {
+        // Run callback with error
+        if (typeof callback === 'function') {
+            callback(new Error(`${recipe.strMeal} is already in your notebook. Have you cooked it yet?`), null);
+        }
+    }
+}
+
+// Delete recipe from notebook
+function deleteFromNotebook(idMeal) {
+    const recipeToDelete = notebook.find(fav => fav.idMeal === idMeal);
+    notebook = notebook.filter(fav => fav.idMeal !== idMeal);
+    localStorage.setItem('notebook', JSON.stringify(notebook));
+    if (recipeToDelete) {
+        alert(`${recipeToDelete.strMeal} removed from notebook.`);
+    }
+    console.log('Notebook after deletion:', notebook);
+    displayNotebook(notebook, notebookContainer, deleteFromNotebook);
+}

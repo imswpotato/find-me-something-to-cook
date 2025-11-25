@@ -23,7 +23,13 @@ export function displayRecipes(recipes, container, onSave) {
 
         // Save button functionality
         recipeCard.querySelector('.save-recipe-button').addEventListener('click', () => {
-            onSave(recipe);
+            onSave(recipe, (err, savedRecipe) => {
+                if (err) {
+                    alert(err.message); // From the callback in app.js
+                } else {
+                    alert(`${savedRecipe.strMeal} saved successfully! But when will you cook it?`);
+                }
+            });
         });
 
         container.appendChild(recipeCard);

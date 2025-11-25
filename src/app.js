@@ -16,17 +16,28 @@ const notebookContainer = document.getElementById('notebook');
 let notebook = JSON.parse(localStorage.getItem('notebook')) || [];
 
 // Save recipe to notebook
-function saveToNotebook(recipe) {
-    if (!notebook.find(fav => fav.idMeal === recipe.idMeal)) {
+function saveToNotebook(recipe, callback) {
+    const alreadySaved = notebook.find(fav => fav.idMeal === recipe.idMeal);
+
+    if (!alreadySaved) {
         notebook.push(recipe);
         localStorage.setItem('notebook', JSON.stringify(notebook));
-        alert(`${recipe.strMeal} saved to notebook!`);
-        console.log('Notebook after saving:', notebook);
         displayNotebook(notebook, notebookContainer, deleteFromNotebook);
+
+        console.log('Notebook after saving:', notebook);
+
+        // Run callback if provided
+        if (typeof callback === 'function') {
+            callback(null, recipe); // success: no error, return recipe
+        }
     } else {
-        alert(`${recipe.strMeal} is already in your notebook.`);
+        // Run callback with error
+        if (typeof callback === 'function') {
+            callback(new Error(`${recipe.strMeal} is already in your notebook. Have you cooked it yet?`), null);
+        }
     }
 }
+
 
 // Delete recipe from notebook
 function deleteFromNotebook(idMeal) {

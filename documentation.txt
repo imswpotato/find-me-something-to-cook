@@ -12,7 +12,7 @@ How will the user interact with my page?
 - When the user load my page, they will see a search bar with search button, clear button, refresh button. The user will type in any ingredient and press search to look for any recipe with that ingredient. The screen will appear a list of recipes for the user to select. The clear button is to clear the typing. 
 - Moreover, when the page loads, the user can also see some random recipes already on the screen. Then the refresh button will do the work to refresh all the random recipes.
 - The user can select the recipe and save it to their own storage on the page, which is called "Notebook." In the "Notebook", the user can select and delete their recipes.
-- Asynce/await => multiple recipes when the page loads, search function.
+- Async/await => multiple recipes when the page loads, search function.
 - Promise to declare a Timeout to delay after the search function; it makes sense to wait for 2-3 seconds for the search result.
 - Callbacks for the save function.
 Sketch or wireframe I design.
